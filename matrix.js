@@ -1,22 +1,56 @@
+// variables
+const canvas = document.getElementById('canvas'),
+    ctx = canvas.getContext('2d'),
+    // arr for drawing func
+    symbolArr = new Array(Math.floor(canvas.width)).fill(0);
+let paused = false,
+    timer;
+
 // first start of drawing func
 window.addEventListener('load', resizeCanvas);
 
 // resize the canvas to fill browser window dynamically
 window.addEventListener('resize', resizeCanvas);
 
-// variables
-const canvas = document.getElementById('canvas'),
-    ctx = canvas.getContext('2d'),
-    // arr for drawing func
-    symbolArr = new Array(Math.floor(canvas.width)).fill(0);
+// pause effect when 'space' is clicked
+window.addEventListener('keydown', () => pauseEffect(event))
 
+// pause effect when touched on touchscreen
+window.addEventListener('touchstart', () => pauseEffect(event))
+
+//func for pausing
+function pauseEffect(event) {
+    // if keyboard event
+    if (event.type === 'keydown') {
+        if (event.key === ' ' && !paused) {
+            clearInterval(timer);
+            paused = true;
+        } else if (event.key === ' ' && paused) {
+            timer = setInterval(drawMatrix, 40);
+            paused = false;
+        }
+        // if touchscreen event 
+    } else if (event.type === 'touchstart') {
+        if (!paused) {
+            clearInterval(timer);
+            paused = true;
+        } else {
+            timer = setInterval(drawMatrix, 40);
+            paused = false;
+        }
+    }
+}
+
+// resize func
 function resizeCanvas() {
     // width and height of canvas  
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
+    // so that there is no acceleration with every resize
+    clearInterval(timer)
     // draws a line in 40 ms
-    setInterval(drawMatrix, 40);
+    timer = setInterval(drawMatrix, 40);
 }
 
 // drawing func
