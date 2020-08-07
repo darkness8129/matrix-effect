@@ -9,3 +9,9 @@ The project is designed to improve the skills of working with canvas and JS.
 
 * **Canvas**
 * **JS**
+
+## In Project Used:
+
+## Screenshots
+
+![Screenshot](screenshots/screenshot-1.png?raw=true "Screenshot")
